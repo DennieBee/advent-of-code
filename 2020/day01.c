@@ -9,6 +9,7 @@ void part1() {
     {
         for (size_t b_index = 0; b_index < size_expense_report; b_index++)
         {
+            if (a_index == b_index) continue;
             if (expense_report[a_index] + expense_report[b_index] == 2020) {
                 printf("The two expenses are: %i and %i\r\n", expense_report[a_index], expense_report[b_index]);
                 printf("The answer is: %i\r\n", expense_report[a_index] * expense_report[b_index]);
@@ -26,6 +27,7 @@ void part2() {
         {
             for (size_t c_index = 0; c_index < size_expense_report; c_index++)
             {
+                if (a_index == b_index || a_index == c_index || b_index == c_index) continue;
                 if (expense_report[a_index] + expense_report[b_index] + expense_report[c_index] == 2020) {
                     printf("The two expenses are: %i and %i and %i\r\n", expense_report[a_index], expense_report[b_index], expense_report[c_index]);
                     printf("The answer is: %i\r\n", expense_report[a_index] * expense_report[b_index] * expense_report[c_index]);
