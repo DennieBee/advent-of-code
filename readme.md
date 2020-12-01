@@ -1,6 +1,6 @@
 # Advent of Code
 
-##2020
+## 2020
 * [X] day 1
 * [ ] day 2
 * [ ] day 3
