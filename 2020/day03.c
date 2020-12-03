@@ -19,7 +19,6 @@ int get_line_length(FILE* file) {
 int main() {
     FILE* file = fopen("day03_input", "r");
     const int line_length = get_line_length(file);
-    char line[line_length];
     char lines[1000][50];
     int16_t line_count;
     
@@ -46,7 +45,7 @@ int main() {
             tree_count++;
         }
     }
-    printf("Part 1\n==========================\nNumber of trees encountered: %i\n\n", tree_count);
+    printf("Part 1\n======\nNumber of trees encountered: %i\n\n", tree_count);
 
     // part 2
     int16_t slopes[5][2];
@@ -70,7 +69,7 @@ int main() {
         }
         multiplication = multiplication * tree_count;
     }
-    printf("Part 2\n==========================\nMultiplication of slopes: %li\n", multiplication);
+    printf("Part 2\n======\nMultiplication of slopes: %li\n", multiplication);
 
     return 0;
 }
