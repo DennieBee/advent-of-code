@@ -37,7 +37,7 @@ int main() {
     
     line_count++;
     int16_t width_needed = (line_count / SLOPE_DOWN) * SLOPE_RIGHT;
-    int16_t blocks_needed = (width_needed / line_length) + 1 /*account for roundin*/;
+    int16_t blocks_needed = 200; //why calculate, when we can overcompensate.... (width_needed / line_length) + 1 /*account for roundin*/;
     char lines_for_slope_rest[line_count][blocks_needed * (line_length)];
     for (int16_t i = 0; i < line_count; i++) {
         for (int16_t j = 0; j < blocks_needed; j++) {
@@ -80,10 +80,8 @@ int main() {
                 tree_count++;
             }
         }
-        printf("%i %i %i \n", slopes[i][0], slopes[i][1], tree_count);
         multiplication = multiplication * tree_count;
     }
-    printf("\n");
     printf("Part 2\n==========================\nMultiplication of slopes: %li\n", multiplication);
 
     return 0;
