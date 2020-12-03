@@ -3,7 +3,7 @@
 ## 2020
 * [X] day 1
 * [X] day 2
-* [ ] day 3
+* [X] day 3
 * [ ] day 4
 * [ ] day 6
 * [ ] day 7
