@@ -35,19 +35,6 @@ int main() {
         lines[line_count][char_index++] = ch;
     }
     
-    // prepare test area
-    line_count++;
-    int16_t width_needed = (line_count / SLOPE_DOWN) * SLOPE_RIGHT;
-    int16_t blocks_needed = 200; //why calculate, when we can overcompensate.... (width_needed / line_length) + 1 /*account for roundin*/;
-    char lines_for_slope_rest[line_count][blocks_needed * (line_length)];
-    for (int16_t i = 0; i < line_count; i++) {
-        for (int16_t j = 0; j < blocks_needed; j++) {
-            for (int16_t k = 0; k < line_length; k++) {
-                lines_for_slope_rest[i][j * line_length + k] = lines[i][k];
-            }
-        }
-    }
-
     // part 1
     int16_t tree_count;
     int pos_x = 0;
@@ -55,7 +42,7 @@ int main() {
     while (pos_y < line_count) {
         pos_x += SLOPE_RIGHT;
         pos_y += SLOPE_DOWN;
-        if (lines_for_slope_rest[pos_y][pos_x] == 35) {
+        if (lines[pos_y][pos_x % line_length] == 35) {
             tree_count++;
         }
     }
@@ -77,7 +64,7 @@ int main() {
         while (pos_y < line_count) {
             pos_x += slopes[i][0];
             pos_y += slopes[i][1];
-            if (lines_for_slope_rest[pos_y][pos_x] == 35) {
+            if (lines[pos_y][pos_x % line_length] == 35) {
                 tree_count++;
             }
         }
