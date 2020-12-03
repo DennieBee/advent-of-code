@@ -35,6 +35,7 @@ int main() {
         lines[line_count][char_index++] = ch;
     }
     
+    // prepare test area
     line_count++;
     int16_t width_needed = (line_count / SLOPE_DOWN) * SLOPE_RIGHT;
     int16_t blocks_needed = 200; //why calculate, when we can overcompensate.... (width_needed / line_length) + 1 /*account for roundin*/;
