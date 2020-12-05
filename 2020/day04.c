@@ -3,6 +3,28 @@
 #include <regex.h>
 #include <string.h>
 
+char* multi_tok(char *input, char *delimiter) {
+    static char* string;
+    if (input != NULL)
+        string = input;
+
+    if (string == NULL)
+        return string;
+
+    char* end = strstr(string, delimiter);
+    if (end == NULL) {
+        char *temp = string;
+        string = NULL;
+        return temp;
+    }
+
+    char* temp = string;
+
+    *end = '\0';
+    string = end + strlen(delimiter);
+    return temp;
+}
+
 int main() {
     // get input
     char* input = 0;
@@ -19,27 +41,27 @@ int main() {
         fclose(f);
     }
 
-    // get key value pairs
-    regex_t regex;
-    regcomp(&regex, "([a-z]|[0-9]|#)+:([a-z]|[0-9]|#)+", REG_EXTENDED);
+    int16_t valid_count;
+    int16_t passport_count;
+    char* passport = multi_tok(input, "\r\n\r\n");
+    while (passport != NULL) { 
+        char* byr = strstr(passport, "byr");
+        char* iyr = strstr(passport, "iyr");
+        char* eyr = strstr(passport, "eyr");
+        char* hgt = strstr(passport, "hgt");
+        char* hcl = strstr(passport, "hcl");
+        char* ecl = strstr(passport, "ecl");
+        char* pid = strstr(passport, "pid");
+        if (byr != NULL && iyr != NULL && eyr != NULL && hgt != NULL && hcl != NULL && ecl != NULL && pid != NULL) {
+            valid_count++;
+        } 
+        passport_count++;
+        passport = multi_tok(NULL,  "\r\n\r\n");
+    } 
 
-    int16_t pos = 0;
-    while (pos < length / sizeof(char)) {
-        regmatch_t regmatch[1];
-        int16_t value = regexec(&regex, &(input[pos]), 1, regmatch, 0);
-        printf ("%.*s\n", regmatch[0].rm_eo - regmatch[0].rm_so, &input[regmatch[0].rm_so + pos]);
-        pos += regmatch[0].rm_eo;
-    }
+    printf("Number of passports: %i\n", passport_count);
 
-    regfree(&regex);
+    printf("Number of valid passports: %i\n", valid_count);
+
     return 0;
 }
-
-
-
-
-    // if (value != 0) {
-    //     char error_message[0x1000];
-    //     regerror(value, &regex, error_message, 0x1000);
-    //     printf ("ERROR: %s\n", error_message);
-    // }
