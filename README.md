@@ -1,6 +1,6 @@
 # Advent of Code
 
-## 2024
+## 2024 (zig)
 * [ ] day 1
 * [ ] day 2
 * [ ] day 3
@@ -27,7 +27,7 @@
 * [ ] day 25
 
 
-## 2020
+## 2020 (c)
 * [X] day 1
 * [X] day 2
 * [X] day 3
