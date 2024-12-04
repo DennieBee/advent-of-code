@@ -1,7 +1,7 @@
 # Advent of Code
 
 ## 2024 (zig)
-* [ ] day 1
+* [X] day 1
 * [ ] day 2
 * [ ] day 3
 * [ ] day 4
