@@ -1,26 +1,10 @@
 const std = @import("std");
+const utils = @import("utils.zig");
 
-pub fn readContents(file_name: []const u8) ![]u8 {
-    const file = try std.fs.cwd().openFile(file_name, .{});
-    defer file.close();
+var list1: [1000]i32 = undefined;
+var list2: [1000]i32 = undefined;
 
-    var buffered_reader = std.io.bufferedReader(file.reader());
-    const reader = buffered_reader.reader();
-    const file_size = (try file.stat()).size;
-
-    const buffer = try std.heap.page_allocator.alloc(u8, file_size);
-    try reader.readNoEof(buffer);
-
-    return buffer;
-}
-
-pub fn main() !void {
-    var list1: [1000]i32 = undefined;
-    var list2: [1000]i32 = undefined;
-
-    const file_name: []const u8 = "day01_input";
-    const buffer = try readContents(file_name);
-
+pub fn parse(buffer: []u8) !void {
     var location_id: [5]u8 = undefined;
     var first_list = true;
     var place_index: usize = 0;
@@ -55,11 +39,16 @@ pub fn main() !void {
 
         pos += 1;
     }
+}
 
-    std.mem.sort(i32, &list1, {}, std.sort.asc(i32));
-    std.mem.sort(i32, &list2, {}, std.sort.asc(i32));
+pub fn execute() !void {
+    const file_name: []const u8 = "day01_input";
+    const buffer = try utils.readContents(file_name);
+    try parse(buffer);
 
     // Part 1
+    std.mem.sort(i32, &list1, {}, std.sort.asc(i32));
+    std.mem.sort(i32, &list2, {}, std.sort.asc(i32));
     var index: usize = 0;
     var distance_sum: i32 = 0;
     while (index < list1.len) {
