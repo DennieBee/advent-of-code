@@ -60,15 +60,17 @@ pub fn parseAndCalculate(buffer: []u8, handle_do: bool) !void {
                 index += 1;
             }
         } else {
-            if (buffer[index] == 109) { //m
-                if (buffer[index + 1] == 117 and buffer[index + 2] == 108 and buffer[index + 3] == 40) { //ul(
-                    reading_mul = true;
-                    reading_left = true;
-                    l.clearAndFree();
-                    r.clearAndFree();
-                    index += 4;
-                    continue;
-                }
+            if (buffer[index] == 109 and
+                buffer[index + 1] == 117 and
+                buffer[index + 2] == 108 and
+                buffer[index + 3] == 40)
+            { //mul()
+                reading_mul = true;
+                reading_left = true;
+                l.clearAndFree();
+                r.clearAndFree();
+                index += 4;
+                continue;
             }
             index += 1;
         }
