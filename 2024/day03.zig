@@ -1,17 +1,41 @@
 const std = @import("std");
 const utils = @import("utils.zig");
 
-pub fn parseAndCalculate(buffer: []u8) !void {
+pub fn parseAndCalculate(buffer: []u8, handle_do: bool) !void {
     var index: usize = 0;
-    var readingMul = true;
-    var readingLeft = true;
+    var mul_enabled = true;
+    var reading_mul = true;
+    var reading_left = true;
     var l = std.ArrayList(u8).init(std.heap.page_allocator);
     var r = std.ArrayList(u8).init(std.heap.page_allocator);
     var sum: i64 = 0;
     while (index < buffer.len - 1) {
-        if (readingMul) {
+        if (handle_do and index < buffer.len - 7) {
+            if (buffer[index] == 100 and
+                buffer[index + 1] == 111 and
+                buffer[index + 2] == 40 and
+                buffer[index + 3] == 41)
+            {
+                mul_enabled = true;
+            }
+            if (buffer[index] == 100 and
+                buffer[index + 1] == 111 and
+                buffer[index + 2] == 110 and
+                buffer[index + 3] == 39 and
+                buffer[index + 4] == 116 and
+                buffer[index + 5] == 40 and
+                buffer[index + 6] == 41)
+            {
+                mul_enabled = false;
+            }
+        }
+        if (!mul_enabled) {
+            index += 1;
+            continue;
+        }
+        if (reading_mul) {
             if (buffer[index] == 44) {
-                readingLeft = false;
+                reading_left = false;
                 index += 1;
                 continue;
             }
@@ -20,26 +44,26 @@ pub fn parseAndCalculate(buffer: []u8) !void {
                 const ri = try std.fmt.parseInt(i32, r.items, 10);
                 const result: i32 = li * ri;
                 sum += result;
-                readingMul = false;
+                reading_mul = false;
                 index += 1;
                 continue;
             }
             if (buffer[index] >= 48 and buffer[index] <= 57) {
-                if (readingLeft) {
+                if (reading_left) {
                     try l.append(buffer[index]);
                 } else {
                     try r.append(buffer[index]);
                 }
                 index += 1;
             } else {
-                readingMul = false;
+                reading_mul = false;
                 index += 1;
             }
         } else {
             if (buffer[index] == 109) { //m
                 if (buffer[index + 1] == 117 and buffer[index + 2] == 108 and buffer[index + 3] == 40) { //ul(
-                    readingMul = true;
-                    readingLeft = true;
+                    reading_mul = true;
+                    reading_left = true;
                     l.clearAndFree();
                     r.clearAndFree();
                     index += 4;
@@ -49,11 +73,14 @@ pub fn parseAndCalculate(buffer: []u8) !void {
             index += 1;
         }
     }
-    std.debug.print("Part 1: {d}", .{sum});
+    std.debug.print("{d}\n", .{sum});
 }
 
 pub fn execute() !void {
     const file_name: []const u8 = "day03_input";
     const buffer = try utils.readContents(file_name);
-    try parseAndCalculate(buffer);
+    std.debug.print("Part 1: ", .{});
+    try parseAndCalculate(buffer, false);
+    std.debug.print("Part 2: ", .{});
+    try parseAndCalculate(buffer, true);
 }
