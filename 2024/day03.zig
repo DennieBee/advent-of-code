@@ -15,7 +15,7 @@ pub fn parseAndCalculate(buffer: []u8, handle_do: bool) !void {
                 buffer[index + 1] == 111 and
                 buffer[index + 2] == 40 and
                 buffer[index + 3] == 41)
-            {
+            { //do()
                 mul_enabled = true;
             }
             if (buffer[index] == 100 and
@@ -25,7 +25,7 @@ pub fn parseAndCalculate(buffer: []u8, handle_do: bool) !void {
                 buffer[index + 4] == 116 and
                 buffer[index + 5] == 40 and
                 buffer[index + 6] == 41)
-            {
+            { //don't()
                 mul_enabled = false;
             }
         }
@@ -34,7 +34,7 @@ pub fn parseAndCalculate(buffer: []u8, handle_do: bool) !void {
             continue;
         }
         if (reading_mul) {
-            if (buffer[index] == 44) {
+            if (buffer[index] == 44) { //,
                 reading_left = false;
                 index += 1;
                 continue;
@@ -48,7 +48,7 @@ pub fn parseAndCalculate(buffer: []u8, handle_do: bool) !void {
                 index += 1;
                 continue;
             }
-            if (buffer[index] >= 48 and buffer[index] <= 57) {
+            if (buffer[index] >= 48 and buffer[index] <= 57) { //numbers
                 if (reading_left) {
                     try l.append(buffer[index]);
                 } else {

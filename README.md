@@ -4,7 +4,7 @@
 * [X] day 1
 * [X] day 2
 * [X] day 3
-* [ ] day 4
+* [X] day 4
 * [ ] day 6
 * [ ] day 7
 * [ ] day 8
